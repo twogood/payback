@@ -13,5 +13,8 @@ class BackendModule(private val configuration: BackendConfig, private val enviro
     fun provideEnvironment() = environment
 
     @Provides
-    fun provideAuthSettings() = configuration.authSettings
+    fun provideOAuth2Settings() = configuration.oAuth2Settings
+
+    @Provides
+    fun provideAccountApiSettings() = configuration.accountApiSettings
 }

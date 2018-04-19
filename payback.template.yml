@@ -1,0 +1,17 @@
+oauth2:
+  oauth2Uri: https://api.seb.se/open/sb/authentication/oauth2
+  clientId:
+  clientSecret:
+  redirectUri: https://example.com/api/auth/oauth2callback
+
+session:
+  maxInactiveIntervalSeconds: 300
+  httpOnly: true
+  secure: false
+
+objectMapper:
+  writeDatesAsTimestamps: false
+
+accountApi:
+  url: https://api.seb.se/open/sb/v1/ais
+
