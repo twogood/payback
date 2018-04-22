@@ -1,4 +1,4 @@
-package se.activout.payback.oauth2
+package se.activout.payback.oauth2.domain
 
 import java.util.concurrent.ThreadLocalRandom
 

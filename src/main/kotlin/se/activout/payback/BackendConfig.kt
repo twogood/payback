@@ -6,9 +6,9 @@ import se.activout.kronslott.auth.session.SessionAuthConfig
 import se.activout.kronslott.auth.session.SessionSettings
 import se.activout.kronslott.objectmapper.ObjectMapperConfig
 import se.activout.kronslott.objectmapper.ObjectMapperSettings
-import se.activout.payback.accounts.AccountApiSettings
-import se.activout.payback.oauth2.OAuth2Config
-import se.activout.payback.oauth2.OAuth2Settings
+import se.activout.payback.accounts.backend.AccountApiSettings
+import se.activout.payback.oauth2.frontend.OAuth2Config
+import se.activout.payback.oauth2.frontend.OAuth2Settings
 import javax.validation.Valid
 
 class BackendConfig : Configuration(), OAuth2Config, ObjectMapperConfig, SessionAuthConfig {
@@ -26,5 +26,5 @@ class BackendConfig : Configuration(), OAuth2Config, ObjectMapperConfig, Session
 
     @Valid
     @JsonProperty("accountApi")
-    val accountApiSettings: AccountApiSettings =  AccountApiSettings()
+    val accountApiSettings: AccountApiSettings = AccountApiSettings()
 }

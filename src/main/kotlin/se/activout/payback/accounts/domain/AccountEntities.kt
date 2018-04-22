@@ -1,4 +1,4 @@
-package se.activout.payback.accounts
+package se.activout.payback.accounts.domain
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty

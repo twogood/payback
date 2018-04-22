@@ -10,6 +10,7 @@ import se.activout.kronslott.auth.session.SessionAuthBundle
 import se.activout.kronslott.auth.session.SessionAuthFilter
 import se.activout.kronslott.auth.session.SessionAuthenticator
 import se.activout.kronslott.objectmapper.ObjectMapperBundle
+import se.activout.payback.app.domain.BackendUser
 
 
 class BackendApp : Application<BackendConfig>() {

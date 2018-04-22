@@ -1,5 +1,6 @@
-package se.activout.payback.oauth2
+package se.activout.payback.oauth2.domain
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.google.common.base.Strings.isNullOrEmpty
@@ -16,5 +17,10 @@ class OAuth2Token(
         @JsonProperty("refresh_token_expires_in") val refreshTokenExpiresIn: Int = 0) {
 
     val hasError: Boolean
+        @JsonIgnore
         get() = !isNullOrEmpty(error)
+
+    val authorizationHeaderValue: String
+        @JsonIgnore
+        get() = "Bearer ${accessToken}"
 }
