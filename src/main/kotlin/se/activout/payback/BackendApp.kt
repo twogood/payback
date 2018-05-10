@@ -35,6 +35,7 @@ class BackendApp : Application<BackendConfig>() {
         environment.apply {
 
             jersey().apply {
+                register(component.getBankResource())
                 register(component.getOAuth2Resource())
                 register(component.getAccountResource())
 

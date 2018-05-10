@@ -13,8 +13,11 @@ class BackendModule(private val configuration: BackendConfig, private val enviro
     fun provideEnvironment() = environment
 
     @Provides
-    fun provideOAuth2Settings() = configuration.oAuth2Settings
+    fun provideSebSettings() = configuration.seb.toSebSettings()
 
     @Provides
-    fun provideAccountApiSettings() = configuration.accountApiSettings
+    fun provideSwedbankSettings() = configuration.swedbank.toSwedbankSettings()
+
+    @Provides
+    fun providenordeaSettings() = configuration.nordea.toNordeaSettings()
 }

@@ -1,9 +1,3 @@
-oauth2:
-  oauth2Uri: https://api.seb.se/open/sb/authentication/oauth2
-  clientId:
-  clientSecret:
-  redirectUri: https://example.com/api/auth/oauth2callback
-
 session:
   maxInactiveIntervalSeconds: 300
   httpOnly: true
@@ -12,6 +6,38 @@ session:
 objectMapper:
   writeDatesAsTimestamps: false
 
-accountApi:
-  url: https://api.seb.se/open/sb/v1/ais
+nordea:
+  accountApiUrl: https://api.nordeaopenbanking.com/v2/accounts
+  oauth2:
+    baseUrl: https://api-nordea.apiconnect.ibmcloud.com/obi-dev/sandbox/v1/authentication
+    authorizePath: ""
+    tokenPath: access_token
+    clientId:
+    clientSecret:
+    redirectUrl: http://localhost:8080/api/auth/nordea/oauth2callback
+    scopes:
+      - ""
 
+seb:
+  accountApiUrl: https://api.seb.se/open/sb/v1/ais
+  oauth2:
+    baseUrl: https://api.seb.se/open/sb/authentication/oauth2
+    authorizePath: authorize
+    tokenPath: token
+    clientId:
+    clientSecret:
+    redirectUrl: http://localhost:8080/api/auth/seb/oauth2callback
+    scopes:
+      - accountinformation
+
+swedbank:
+  accountApiUrl: https://psd2.api.swedbank.com/sandbox/v1/accounts
+  oauth2:
+    baseUrl: https://psd2.api.swedbank.com/psd2
+    authorizePath: authorize
+    tokenPath: token
+    clientId:
+    clientSecret:
+    redirectUrl: http://localhost:8080/api/auth/swedbank/oauth2callback
+    scopes:
+      - PSD2sandbox

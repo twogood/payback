@@ -6,15 +6,58 @@ import se.activout.kronslott.auth.session.SessionAuthConfig
 import se.activout.kronslott.auth.session.SessionSettings
 import se.activout.kronslott.objectmapper.ObjectMapperConfig
 import se.activout.kronslott.objectmapper.ObjectMapperSettings
-import se.activout.payback.accounts.backend.AccountApiSettings
-import se.activout.payback.oauth2.frontend.OAuth2Config
-import se.activout.payback.oauth2.frontend.OAuth2Settings
+import se.activout.payback.bank.nordea.NordeaSettings
+import se.activout.payback.bank.seb.SebSettings
+import se.activout.payback.bank.swedbank.SwedbankSettings
+import se.activout.payback.domain.BankOAuth2Settings
 import javax.validation.Valid
 
-class BackendConfig : Configuration(), OAuth2Config, ObjectMapperConfig, SessionAuthConfig {
-    @Valid
-    @JsonProperty("oauth2")
-    override var oAuth2Settings: OAuth2Settings = OAuth2Settings()
+data class OAuth2SettingsJson(
+        val baseUrl: String? = null,
+        val authorizePath: String? = null,
+        val tokenPath: String? = null,
+        val clientId: String? = null,
+        val clientSecret: String? = null,
+        val redirectUrl: String? = null,
+        val scopes: List<String>? = null
+) {
+    fun toOAuth2Settings(): BankOAuth2Settings {
+        return BankOAuth2Settings(
+                baseUrl = checkNotNull(baseUrl),
+                authorizePath = checkNotNull(authorizePath),
+                tokenPath = checkNotNull(tokenPath),
+                clientId = checkNotNull(clientId),
+                clientSecret = checkNotNull(clientSecret),
+                redirectUrl = checkNotNull(redirectUrl),
+                scopes = checkNotNull(scopes)
+        )
+    }
+}
+
+data class BankSettingsJson(val accountApiUrl: String? = null, val oauth2: OAuth2SettingsJson? = null) {
+    fun toSebSettings(): SebSettings {
+        return SebSettings(
+                accountApiUrl = checkNotNull(accountApiUrl),
+                oauth2 = checkNotNull(oauth2).toOAuth2Settings()
+        )
+    }
+
+    fun toSwedbankSettings(): SwedbankSettings {
+        return SwedbankSettings(
+                accountApiUrl = checkNotNull(accountApiUrl),
+                oauth2 = checkNotNull(oauth2).toOAuth2Settings().copy(authorizeParams = mapOf("bic" to "SANDSESS"))
+        )
+    }
+
+    fun toNordeaSettings(): NordeaSettings {
+        return NordeaSettings(
+                accountApiUrl = checkNotNull(accountApiUrl),
+                oauth2 = checkNotNull(oauth2).toOAuth2Settings()
+        )
+    }
+}
+
+class BackendConfig : Configuration(), ObjectMapperConfig, SessionAuthConfig {
 
     @Valid
     @JsonProperty("objectMapper")
@@ -25,6 +68,14 @@ class BackendConfig : Configuration(), OAuth2Config, ObjectMapperConfig, Session
     override val sessionSettings: SessionSettings = SessionSettings()
 
     @Valid
-    @JsonProperty("accountApi")
-    val accountApiSettings: AccountApiSettings = AccountApiSettings()
+    @JsonProperty("nordea")
+    val nordea: BankSettingsJson = BankSettingsJson()
+
+    @Valid
+    @JsonProperty("seb")
+    val seb: BankSettingsJson = BankSettingsJson()
+
+    @Valid
+    @JsonProperty("swedbank")
+    val swedbank: BankSettingsJson = BankSettingsJson()
 }

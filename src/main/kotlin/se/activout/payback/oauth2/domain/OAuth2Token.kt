@@ -16,6 +16,10 @@ class OAuth2Token(
         @JsonProperty("refresh_token") val refreshToken: String? = "",
         @JsonProperty("refresh_token_expires_in") val refreshTokenExpiresIn: Int = 0) {
 
+    val success: Boolean
+        @JsonIgnore
+        get() = !hasError
+
     val hasError: Boolean
         @JsonIgnore
         get() = !isNullOrEmpty(error)
